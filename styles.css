@@ -1,0 +1,163 @@
+*, *::after, *::before { /*selects everything and makes adjusting box sizing easier */
+    box-sizing: border-box;
+} /* (*) targets CSS on different IE browser; 
+::before/after are pseudo elements placed before and after the content of each element */
+
+:root {
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * .9); /*size of x's an o's*/
+}
+
+body {
+    margin: 0;
+}
+
+.board { /*class board*/
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto); /*creates 9 even cells*/
+}
+
+.cell {
+    width: var(--cell-size); /*refer to psuedo element :root*/
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell:first-child, /*removes border of the top of board*/
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n + 1) { /*removes border of the left of board*/
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3) { /*removes border of the right of board*/
+    border-right: none;
+}
+
+.cell:last-child, /*removes border of the bottom of board*/
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+/*displayed not allowed when cursor hovers a filled cell*/
+.cell.x,
+.cell.o {
+    cursor: not-allowed;
+}
+
+/*after x is placed*/
+.cell.x::before, /*color of both lines of x's*/
+.cell.x::after {
+background-color: red;    
+}
+
+/*before x is placed*/
+.board.x .cell:not(.x):not(.o):hover::before, /*sying that if cell is not x or o, cell can be hovered with shape of correseponding turn*/
+.board.x .cell:not(.x):not(.o):hover::after {
+    background-color: pink;
+}
+
+/*after o is placed*/
+.cell.o::before {
+    background-color: rgb(0, 128, 255);
+}
+
+/*before o is placed*/
+.board.o .cell.cell:not(.x):not(.o):hover::before {
+    background-color: rgb(169, 215, 246);
+}
+
+/*creating the cross shape of x's with 2 bars*/
+.cell.x::before, 
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+    content: ''; /* so that bars renders*/
+    position: absolute; /*gives the exact same base or parent to give better overlap*/
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+}
+
+/*gives diagnol shape of the x*/
+.cell.x::before,
+.board.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg); 
+}
+
+/* gives two o's to overlap each other*/
+.cell.o::before,
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+/*outer-circle*/
+.cell.o::before,
+.board.o .cell:not(.x):not(.o):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+}  
+
+/*inner circle*/
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}  
+
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9); /*transparent background to display message*/
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+.winning-message button {
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.winning-message.show {
+    display: flex;
+}

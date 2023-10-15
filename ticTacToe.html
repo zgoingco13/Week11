@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+    <div class="board" id="board"> <!--this creates the backbone of the board (9cells) -->
+        <div class="cell" ttt-cell></div><!--each cell has a class of cell and ttt-cell-->
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+        <div class="cell" ttt-cell></div>
+    </div>
+    <div class="winning-message" id="winningMessage"> <!--this will be backbone for the end when there is a winner or tie-->
+        <div ttt-winning-message-text>X wins!</div>
+        <button id="restartButton">Restart</button><!--button to restart the game-->
+        
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="ticTacToe.js"></script>
+</body>
+</html>
